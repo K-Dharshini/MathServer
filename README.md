@@ -2,14 +2,12 @@
 ## Date:
 
 ## AIM:
- To design a website to calculate the power of a lamp filament in an incandescent bulb in the server side. 
-
+To design a website to find surface area of a Right Cylinder in server side.
 
 ## FORMULA:
-P = I<sup>2</sup>R
-<br> P --> Power (in watts)
-<br> I --> Intensity
-<br> R --> Resistance
+Surface Area = 2Πrh + 2Πr<sup>2</sup>
+<br>r --> Radius of Right Cylinder
+<br>h --> Height of Right Cylinder
 
 ## DESIGN STEPS:
 ### Step 1:
@@ -34,107 +32,89 @@ Publish the website in the given URL.
 ### math.html
 ~~~
 <html>
-
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Area of Square Prism</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <style type="text/css">
-        body
-        {
-            background-color:green;
-        }
-
-        .edge
-        {
-            display: flex;
-            height: 100vh;
-            width: 100%;    
-            justify-content: center;
-            align-items: center;
-        }
-
-        .box
-        {
-            display: block;
-            width: 500px;
-            min-height: 300px;
-            font-size: 20px;
-            background: rgb(142, 152, 7);
-            background: linear-gradient(90deg, rgb(152, 7, 104) 9%, rgb(0, 7, 90) 56%);
-            border-radius: 10px;
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        }
-
-        .formelt
-        {
-            color: red;
-            text-align: center;
-            margin-top: 7px;
-            margin-bottom: 6px;
-        }
-
-        h1
-        {
-            color: white;
-            text-align: center;
-            padding-top: 20px;
-        }
-        input{
-            margin: 5px;
-            padding: 5px;
-            border-radius: 5px;
-            border: none;
-        }
-    </style>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<title>Surface Area of Right Cylinder</title>
+<title>Samakash.R.S(212223230182)</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<style type="text/css">
+body
+{
+background-color:rgb(12, 239, 87);
+}
+.edge {
+width: 1440px;
+margin-left: auto;
+margin-right: auto;
+padding-top: 250px;
+padding-left: 300px;
+}
+.box {
+display:block;
+border: Thick dashed rgb(239, 5, 181);
+width: 500px;
+min-height: 300px;
+font-size: 20px;
+background-color:rgb(221, 245, 10);
+}
+.formelt{
+color:rgw(1, 18, 17);
+text-align: center;
+margin-top: 7px;
+margin-bottom: 6px;
+}
+h1
+{
+color:rgb(7, 9, 1);
+text-align: center;
+padding-top: 20px;
+}
+</style>
 </head>
-
 <body>
-    <div class="edge">
-        <div class="box">
-            <h1>Area of  Square Prism</h1>
-            <form method="POST">
-                {% csrf_token %}
-                <div class="formelt">
-                    base : <input type="text" name="length" value="{{a}}"></input>(in m)<br />
-                </div>
-                <div class="formelt">
-                    Height : <input type="text" name="breadth" value="{{h}}"></input>(in m)<br />
-                </div>
-                <div class="formelt">
-                    <input type="submit" value="Calculate"></input><br />
-                </div>
-                <div class="formelt">
-                    Area : <input type="text" name="area" value="{{area}}"></input>m<sup>2</sup><br />
-                </div>
-            </form>
-        </div>
-    </div>
+<div class="edge">
+<div class="box">
+<h1>Surface Area of Right Cylinder</h1>
+<form method="POST">
+{% csrf_token %}
+<div class="formelt">
+Radius : <input type="text" name="radius" value="{{r}}"></input>(in m)<br/>
+</div>
+<div class="formelt">
+Height : <input type="text" name="height" value="{{h}}"></input>(in m)<br/>
+</div>
+<div class="formelt">
+<input type="submit" value="Calculate"></input><br/>
+</div>
+<div class="formelt">
+Area : <input type="text" name="area" value="{{area}}"></input>m<sup>2</sup><br/>
+</div>
+</form>
+</div>
+</div>
 </body>
-
 </html>
 ~~~
 
 ### views.py
 ~~~
 from django.shortcuts import render
-
-def prismarea(request):
+def surfacearea(request):
     context={}
     context['area'] = "0"
-    context['a'] = "0"
+    context['r'] = "0"
     context['h'] = "0"
     if request.method == 'POST':
         print("POST method is used")
-        a = request.POST.get('length','0')
-        h = request.POST.get('breadth','0')
+        r = request.POST.get('radius','0')
+        h = request.POST.get('height','0')
         print('request=',request)
-        print('Length=',a)
-        print('Breadth=',h)
-        area = 2*(int(a)**2) + 4*int(a)*int(h)
+        print('radius=',r)
+        print('height=',h)
+        area = 2 * 3.14 * int(r) * int(h) + 2 * 3.14 * int(r) * int(r)
         context['area'] = area
-        context['a'] = a
+        context['r'] = r
         context['h'] = h
         print('Area=',area)
     return render(request,'mathapp/math.html',context)
@@ -142,37 +122,21 @@ def prismarea(request):
 
 ### urls.py
 ~~~
-"""
-URL configuration for EX project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-
 from django.contrib import admin
 from django.urls import path
 from mathapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('areaofrectangle/',views.prismarea,name="areaofrectangle"),
-    path('',views.prismarea,name="areaofrectangleroot")
+    path('surfaceareaofcylinder/',views.surfacearea,name="surfaceareaofcylinder"),
+    path('',views.surfacearea,name="surfaceareaofcylinderroot")
 ]
 ~~~
 
-## OUTPUT:
-![image](https://github.com/user-attachments/assets/6fbf14be-6a15-44dd-84d7-d8f4aea44d5d)
+## SERVER SIDE PROCESSING:
+![image](https://github.com/user-attachments/assets/c3e1d7d7-eaf9-4075-a5f5-5b34bb04b11f)
 
-![image](https://github.com/user-attachments/assets/d7528b3a-78a3-4d7c-bb98-c223408d7123)
+## HOMEPAGE:
+![image](https://github.com/user-attachments/assets/6da5ecbe-5761-468d-995b-644d87d597b7)
 
 ## RESULT:
 The program for performing server side processing is completed successfully.
